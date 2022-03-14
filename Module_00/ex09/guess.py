@@ -14,12 +14,17 @@ while True:
         elif guess > fix:
             print("Too high!")
         else:
+            if guess == 42:
+                print("The answer to the ultimate question of life, the universe and everything is 42.")
+            if num == 1: 
+                print("Congratulations! You got it on your first try!")
+                break 
             print("Congratulations, you've got it!\nYou won in %d attempts!\n" %(num))
             break 
     elif inp.isdigit():
         print("The number has to be between 1 and 99")
     elif inp == 'exit':
-        print("Thank you for playing with us and see you soon!")
+        print("Goodbye!")
         break
     else:
          print("That's not a number.")
