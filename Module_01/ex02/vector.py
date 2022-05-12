@@ -105,18 +105,25 @@ class Vector:
 		return f"Vector shape is : row = {self.shape[0]} and column {self.shape[1]} -- Values = {self.value}"
 	def __repr__(self):
 		return f"Vector(shape({self.shape}), values({self.value}))"
+	
+	def dot(self, mul):
+		if not isinstance(mul, Vector) or self.shape != mul.shape:
+			raise ValueError('Both vectors has to be of the same form')
+		new = []
+		if self.shape[0] == 1: # 1 column
+			for i in range(self.shape[1]): #we go through the raws
+				new.append([self.value[i][0] * mul.value[i][0]])
+		else:
+			for i in range(self.shape[0]): #we go through the columns
+				new.append(self.value[i] * mul.value[i])
+		return Vector(new)
 
-#v1 = Vector(3)
-#v2 = Vector((-10, 15))
-v3 = Vector([0.0, 1.0, 2.0, 3.0])
-v4 = Vector([[0.0], [1.0], [2.0], [3.0]])
-v1 = 2.0 / v3
-
-#v5 = Vector((1, 4))
-#for i in v1.value:
-#	print(i)
-#for i in v2.value:
-#	print(i)
-#for i in v3.value:
-print(v3)
-print(v1)
+	def	T(self):
+		new = []
+		if self.shape[0] == 1:
+			for i in range(self.shape[1]):
+				new.append(self.value[i][0])
+		else:
+			for i in range(self.shape[0]):
+				new.append([self.value[i]])
+		return Vector(new)
