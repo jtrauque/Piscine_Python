@@ -5,18 +5,18 @@ def	generator(text, sep=" ", option=None):
 		print("Error")
 		quit()
 
-	new = text.split
+	new = text.split()
+	if not new:
+		exit() 
 	if option == "shuffle":
-		tmp = random.sample(new, len(new))
-		print(tmp)
-		for i in tmp:
-			yield i
+		new = random.sample(new, len(new))
 	elif option == "unique":
-		tmp = list(dict.fromkeys(new))
-		print(tmp)
-		for i in tmp:
-			yield i
+		new = list(dict.fromkeys(new))
+	elif option == "ordered":
+		new.sort()
+	for i in new:
+		yield i
 
 
-for word in generator("hello ca va hello toi", " ", "unique"):
+for word in generator("hello ca va hello toi", " "):
 	print(word)
