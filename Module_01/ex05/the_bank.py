@@ -16,26 +16,41 @@ class Bank:
 		self.account.append(account)
 
 	def transfer(self, origin, dest, amount):
-		o = find_account(origin)
-		d = find_account(dest)
-		if o == -1 or d == -1:
+		o = self.find_account(origin)
+		d = self.find_account(dest)
+		if o == None or d == None:
 			print("Accounts origin or dest not found")
 			return False
-		if (self.account[]
+		print(f"{o.name} gives {amount} to {d.name}")
+		if amount < 0 or amount > o.value or not isinstance(amount, (float, int)):
+			print("Error amount")
+			return False
+		d.tranfert(amount)
+		o.value -= amount
+		return True
 		
 	def find_account(self, account):
-		if isinstance(account, int):
-			for i in self.account:
-				if account == self.account.id:
-					return i
+		if isinstance(account, int) and not None:
+			print("INT")
+			for find in self.account:
+				if account == find.account.id:
+					return find
 			return False
-		elif isinstance(account, str):
-			for i in self.account:
-				if account == self.account.name:
-					return i
+		elif isinstance(account, str) and not None:
+			print("STR")
+			for find in self.account:
+				if account == find.account.name:
+					return find
+			return False
 		else:
 			print("Account not found please provide us the name or the ID")
 			return -1
 
-	def fix_account(self, account):
-		
+#	def fix_account(self, account):	
+
+a1 = Account("Tom")	
+a2 = Account("Bob")
+B = Bank
+B.add(a1)
+B.add("Bob")
+B.transfer("Tom", "Bob", 20)
