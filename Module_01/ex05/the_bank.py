@@ -5,11 +5,14 @@ class Account(object):
 		self.name = name
 		self.__dict__.update(kwargs)
 		Account.ID_COUNT += 1
+		self.value = 0
+
+
 	def transfer(self, amount):
 		self.value += amount
 
 class Bank:
-	def __init__(self, accounts):
+	def __init__(self):
 		self.account = []
 
 	def add(self, account):
@@ -33,13 +36,13 @@ class Bank:
 		if isinstance(account, int) and not None:
 			print("INT")
 			for find in self.account:
-				if account == find.account.id:
+				if account == find.id:
 					return find
 			return False
 		elif isinstance(account, str) and not None:
 			print("STR")
 			for find in self.account:
-				if account == find.account.name:
+				if account == find.name:
 					return find
 			return False
 		else:
@@ -48,9 +51,9 @@ class Bank:
 
 #	def fix_account(self, account):	
 
-a1 = Account("Tom")	
-a2 = Account("Bob")
-B = Bank
+a1 = Account('Tom')	
+a2 = Account('Bob')
+B = Bank()
 B.add(a1)
-B.add("Bob")
+B.add(a2)
 B.transfer("Tom", "Bob", 20)
