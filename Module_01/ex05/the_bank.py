@@ -1,4 +1,7 @@
 class Account(object):
+		print(tmp)
+		for i in tmp:
+			yield i
 	ID_COUNT = 1
 	def __init__(self, name, **kwargs):
 		self.id = self.ID_COUNT
@@ -47,8 +50,13 @@ class Bank:
 			return False
 		else:
 			print("Account not found please provide us the name or the ID")
-			return -1
+			return False
 
+	@staticmethod
+	def check_corruption(account):
+		if not all(hasattr(account, attr) for attr in ['name', 'id', 'value']):
+			print("Account corrupted")
+			return False
 #	def fix_account(self, account):	
 
 a1 = Account('Tom')	
