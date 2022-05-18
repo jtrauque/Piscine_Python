@@ -4,14 +4,20 @@ import os
 import logging
 
 def	log(function):
-	print("helllo")
-	#def printer():
-	#	start = time.time()
-	#	ret = function(self)
-	#	end = time.time() - start
-		#name = func.__name__
-	#	Log_Format = "%(func.__name__) [ exect-time = %(end)]"
-	#	logging.basicConfig(filename = "console.log", filemode = "w", format = Log_Format)
+	def printer(self, water_level=None):
+		start = time.time()
+		if not water_level:
+			ret = function(self)
+		else:
+			ret = function(self, water_level)
+		end = time.time() - start
+		name = function.__name__
+		Log_Format = "%(func.__name__)s [ exect-time = %(end)s]"
+		logging.basicConfig(filename = "console.log", filemode = "w", format = Log_Format, level = logging.ERROR)
+		logger = logging.getLogger()
+		logger.error("plop")
+		return ret
+	return printer
 
 class CoffeeMachine():
 	water_level = 100
@@ -45,8 +51,7 @@ class CoffeeMachine():
 
 if __name__ == "__main__":
 	machine = CoffeeMachine()
-	print(machine.__dict__)	
 	for i in range(0, 5):
 		machine.make_coffee()
 	machine.make_coffee()
-	machine.add_water()
+	machine.add_water(70)
