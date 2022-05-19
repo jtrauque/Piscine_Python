@@ -6,11 +6,11 @@ class CsvReader():
 			raise ValueError("No Filename")
 		if not sep:
 			raise ValueError("We neep separator to separate values")
-		#try:
-		#	self.file = open(filename)
+	#	try:
+	#		self.file = open(filename)
 	#	except Exception :
 	#		print("File corrupted")
-	#		exit()
+#			exit()
 		num_lines = sum(1 for line in open(filename))
 		self.sep = sep
 		self.header = header
@@ -23,19 +23,25 @@ class CsvReader():
 
 	def __enter__(self):
 		i = 0
+		#for line in self.file.readlines():
 		with open(self.file) as file:
-			lines = file.readlines().split(self.sep)
+			for line in file:
+				print(f"line = {line}")
+				line.replace("\n", "")
+				words = line.split(self.sep)
+				print(f"word = {words}")
 			if self.size == 0:
-				self.size = len(lines)
+				self.size = len(words)
 				if self.header:
-					self.first_line = lines	
-			if self.size == len(lines) and i > self.top and i < self.bot:
-				self.data.append(lines)
+					self.first_line = words	
+			if self.size == len(words) and i >= self.top and i < self.bot:
+				self.data.append(words)
 			else:
 				raise ValueError("File Corrupted")
 			i += 1
+		return self
 			
-	def	__exit__(self):
+	def	__exit__(self, filename=None, sep=',', header=False, skip_top=0, skip_bottom=0):
 		#self.data.close()
 		pass
 
