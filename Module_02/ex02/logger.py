@@ -11,11 +11,12 @@ def	log(function):
 		else:
 			ret = function(self, water_level)
 		end = time.time() - start
-		name = function.__name__
-		Log_Format = "%(func.__name__)s [ exect-time = %(end)s]"
-		logging.basicConfig(filename = "console.log", filemode = "w", format = Log_Format, level = logging.ERROR)
-		logger = logging.getLogger()
-		logger.error("plop")
+		if end <= 1 :
+			end *= 1000
+		name = os.environ['USER']
+		Log_Format = ""
+		logging.basicConfig(filename = "console.log", filemode = "w", format= Log_Format, level = logging.INFO)
+		logging.info(f"({name})Running: {function.__name__.capitalize(): <19}[ exec-time = {end:.3f} {'ms' if end < 1 else 's'} ]")
 		return ret
 	return printer
 
