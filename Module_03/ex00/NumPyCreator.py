@@ -10,21 +10,16 @@ class NumPyCreator:
     def from_list(lst):
         np = None
         try:
-            print("1")
             if not isinstance(lst, list):
-                print("2")
                 raise TypeError("Incorrect list")
             if isinstance(lst[0], list):
-                print("3")
                 for i in lst:
                     if len(i) != len(lst[0]):
                          print("Incorrect shape of list")
                          return np
-                print("4")
                 np = numpy.array(lst)
         except TypeError:
             pass
-            #raise TypeError("Incorrect Type")
         return np
 
     @staticmethod
@@ -33,9 +28,14 @@ class NumPyCreator:
         try:
             if not isinstance(tpl, tuple):
                 raise TypeError("Incorrect Type")
+            if isinstance(tpl[0], tuple):
+                for i in tpl:
+                    if len(i) != len(tpl[0]):
+                         print("Incorrect shape of list")
+                         return np
             np = numpy.array(tpl)
         except TypeError:
-            raise TypeError("Incorrect Type")
+            pass
         return np
 
     @staticmethod
@@ -44,9 +44,9 @@ class NumPyCreator:
         try:
             if not hasattr(itr, "__iter__"):
                 raise TypeError("Incorrect Type")
-            np = numpy.array(iter)
+            np = numpy.array(itr)
         except TypeError:
-            raise TypeError("Incorrect Type")
+            pass
         return np
 
     @staticmethod
@@ -57,7 +57,7 @@ class NumPyCreator:
                 raise TypeError("Incorrect Type")
             np = numpy.full(shape, value)
         except TypeError:
-            raise TypeError("Incorrect Type")
+            pass
         return np
 
     @staticmethod
@@ -68,23 +68,23 @@ class NumPyCreator:
                 raise TypeError("Incorrect Type")
             np = numpy.random.random(shape)
         except TypeError:
-            raise TypeError("Incorrect Type")
+            pass
         return np
 
     @staticmethod
     def identity(n):
-        return numpy.array(n)
+        return numpy.identity(n)
 
 
 npc = NumPyCreator()
 print(npc.from_list([[1, 2, 3], [6, 3, 4]]))
 print(npc.from_list([[1, 2, 3], [6, 4]]))
 print(npc.from_list([[1, 2, 3], ['a', 'b', 'c'], [6, 4, 7]]))
-#npc.from_list(((1, 2), (3, 4)))
-#npc.from_tuple(("a", "b", "c"))
-#npc.from_tuple([[1, 2, 3], [6, 3, 4]])
-#npc.from_iterable(range(5))
-#shape = (3, 5)
-#npc.from_shape(shape)
-#npc.random(shape)
-#npc.identity(4)
+print(npc.from_list(((1, 2), (3, 4))))
+print(npc.from_tuple(("a", "b", "c")))
+print(npc.from_tuple([[1, 2, 3], [6, 3, 4]]))
+print(npc.from_iterable(range(5)))
+shape = (3, 5)
+print(npc.from_shape(shape))
+print(npc.random(shape))
+print(npc.identity(4))
