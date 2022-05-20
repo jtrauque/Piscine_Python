@@ -13,6 +13,9 @@ def check(name, cooking_lvl, cooking_time, ingredients, description, recipe_type
 	elif not isinstance(ingredients, list):
 		print("Input error : ingredients has to be a list")
 	elif isinstance(ingredients, list):
+		if not ingredients:
+			print("Input error : ingredients - list type")
+			quit()
 		for elm in ingredients:
 			if not isinstance(elm, str) or not len(elm):
 				print("Input error : ingredients - list type")

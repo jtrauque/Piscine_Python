@@ -18,3 +18,9 @@ book.get_recipe_by_name("Pasta")
 book.get_recipes_by_types("starter")
 
 print(book)
+
+b = Book("My seductive recipes")
+crumble = Recipe("Crumble" , 1, 25, ["apples", "flour", "sugar"], "delicious", "dessert")
+b.add_recipe(crumble)
+b.get_recipes_by_types("asdasd")
+print(b.get_recipes_by_types("dessert")[0])

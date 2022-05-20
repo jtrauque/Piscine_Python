@@ -16,13 +16,17 @@ class Book:
 			for key in type :
 				if key.name == name :
 					print(key)
-					return
+					return self.recipe_list[elm]
 		print("The recipe is not in the book or is misspelled")
 	
 	def get_recipes_by_types(self, recipe_type):
+		if recipe_type not in self.recipe_list:
+			print("The type is not recognised")
+			return
 		print("For the the " + recipe_type + ", you have :")
 		for elm in self.recipe_list[recipe_type] :
 			print('* ' + elm.name)
+		return self.recipe_list[recipe_type] 
 
 	def add_recipe(self, recipe):
 		self.last_update = datetime.datetime.now()
