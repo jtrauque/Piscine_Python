@@ -1,13 +1,21 @@
 
-def	ft_reduce(function_to_apply, iterable):
-	try:
-		new = iterable[0]
-		for i in iterable[1:]:
-			new = function_to_apply(new, i)
-		return new
-	
-	except TypeError:
-		raise ValueError("Error : the function is not applicable to the values")
+def ft_reduce(function_to_apply, iterable):
+    try:
+        if iterable is None or not isinstance(iterable, iter):
+            return None
+        new = iterable[0]
+        for i in iterable[1:]:
+            new = function_to_apply(new, i)
+        return new
+
+    except TypeError:
+        print("Error : the function is not applicable to the values")
+        return None
+
 
 lst = ['H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd']
-print(ft_reduce(lambda u, v: u + v, lst))		
+iterable = [1, 2, 3]
+function = lambda x: x + 1
+print(ft_reduce(lambda u, v: u + v, lst))
+print(ft_reduce(None, iterable=iterable))
+list(ft_reduce(function, None))
