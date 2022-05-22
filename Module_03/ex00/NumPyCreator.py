@@ -1,6 +1,7 @@
 import numpy
 import sys
-#sys.tracebacklimit = 0
+# sys.tracebacklimit = 0
+
 
 class NumPyCreator:
     def __init__(self):
@@ -15,8 +16,8 @@ class NumPyCreator:
             if isinstance(lst[0], list):
                 for i in lst:
                     if len(i) != len(lst[0]):
-                         print("Incorrect shape of list")
-                         return np
+                        print("Incorrect shape of list")
+                        return np
                 np = numpy.array(lst)
         except TypeError:
             pass
@@ -31,8 +32,8 @@ class NumPyCreator:
             if isinstance(tpl[0], tuple):
                 for i in tpl:
                     if len(i) != len(tpl[0]):
-                         print("Incorrect shape of list")
-                         return np
+                        print("Incorrect shape of list")
+                        return np
             np = numpy.array(tpl)
         except TypeError:
             pass

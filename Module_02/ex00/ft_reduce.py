@@ -15,7 +15,6 @@ def ft_reduce(function_to_apply, iterable):
 
 lst = ['H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd']
 iterable = [1, 2, 3]
-function = lambda x: x + 1
 print(ft_reduce(lambda u, v: u + v, lst))
 print(ft_reduce(None, iterable=iterable))
-list(ft_reduce(function, None))
+list(ft_reduce(lambda x: x + 1, None))
