@@ -30,4 +30,4 @@ class ImageProcessor:
             imgplot = plt.imshow(array)
             plt.show()
         except Exception as msg:
-            print("Display error")
+            print("Display error :", msg)
