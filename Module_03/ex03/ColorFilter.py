@@ -35,12 +35,36 @@ class ColorFilter:
     def to_celluloid(self, array): # .arange, .linspace
         if not isinstance(array, np.ndarray):
             return None
-        pass
+        inter = np.linspace(0, 1, 5)
+        for i in np.arange(1, 5):
+            array[(array>=inter[i - 1]) & (array<inter[i])] = inter[i - 1]
+        return array
 
-    # .sum,.shape,.tile,.reshape,.dstack,.broadcast_to,.as_type + '*' + '/'
     def to_grayscale(self, array, filter, **kwargs):
-        pass
+        if array is None or not isinstance(array, np.ndarray):
+            print("1")
+            return None
+        if filter not in ['m', 'mean', 'w', 'weight']:
+            print("2")
+            return None
+        if filter in ['m', 'mean']:
+            print("3")
+            #return np.dstack((np.sum(array, -1), np.sum(array, -1), np.sum(array, -1))) / 3
+            #new = [0.299, 0.587, 0.114] * array[:, :, :3]
+            ret = np.sum(array[..., :3], axis=2, keepdims=True) / 3
+            return np.dstack((np.tile(ret, 3), array[..., 3:]))
+        else:
+            print("4")
+            ret = np.sum(array[..., :3], axis=2, keepdims=True)
+            return np.dstack((np.tile(ret, 3), array[..., 3:]))
+           # num = NumPyCreator()
+            #weight = num.from_list(weight)
+            #if weight and weight.shape[0] == 3 and np.sum(weight, axis=0) == 1.0 and\
+              # np.sum(((weight >=0) & (weight <=1)).astype(int)) == 3:
+              #  ret = np.sum(array * np.broadcast_to(weight, array.shape), -1) /3
+               # return np.dstack((ret, ret, ret))
 
+        # .sum,.shape,.tile,.reshape,.dstack,.broadcast_to,.as_type + '*' + '/'
 from ImageProcessor import ImageProcessor
 
 if __name__ == "__main__":
@@ -53,7 +77,9 @@ if __name__ == "__main__":
     print(arr)
     imp.display(arr)
     #arr2 = cf.to_blue(arr)
-    arr2 = cf.to_green(arr)
-    arr2 = cf.to_red(arr)
-    print(arr2)
+    #arr2 = cf.to_green(arr)
+    #arr2 = cf.to_red(arr)
+    #arr2 = cf.to_celluloid(arr)
+    arr2 = cf.to_grayscale(arr, 'm')
+    #print(arr2)
     imp.display(arr2)
