@@ -8,16 +8,13 @@ class ColorFilter:
     def invert(self, array): # None authorized except + and - 
         if not isinstance(array, np.ndarray):
             return None
-        print(array)
         return 1 - array[:, :, :3]
 
     def to_blue(self, array): # .zero, .shape, .dstack
         if not isinstance(array, np.ndarray):
             return None
-        print(array)
-        new = np.zeros((array.shape[0], array.shape[1], 3), dtype=int)
+        new = np.zeros((array.shape[0], array.shape[1], 3))
         new[:, :, 2] = array[:, :, 2]
-        print(new)
         return new
 
     def to_green(self, array): # copy.deepcopy + '*'
@@ -42,29 +39,30 @@ class ColorFilter:
 
     def to_grayscale(self, array, filter, **kwargs):
         if array is None or not isinstance(array, np.ndarray):
-            print("1")
             return None
         if filter not in ['m', 'mean', 'w', 'weight']:
-            print("2")
             return None
         if filter in ['m', 'mean']:
-            print("3")
-            #return np.dstack((np.sum(array, -1), np.sum(array, -1), np.sum(array, -1))) / 3
-            #new = [0.299, 0.587, 0.114] * array[:, :, :3]
-            ret = np.sum(array[..., :3], axis=2, keepdims=True) / 3
-            return np.dstack((np.tile(ret, 3), array[..., 3:]))
+            R = 0.299
+            G = 0.587
+            B = 0.114
         else:
-            print("4")
-            ret = np.sum(array[..., :3], axis=2, keepdims=True)
-            return np.dstack((np.tile(ret, 3), array[..., 3:]))
-           # num = NumPyCreator()
-            #weight = num.from_list(weight)
-            #if weight and weight.shape[0] == 3 and np.sum(weight, axis=0) == 1.0 and\
-              # np.sum(((weight >=0) & (weight <=1)).astype(int)) == 3:
-              #  ret = np.sum(array * np.broadcast_to(weight, array.shape), -1) /3
-               # return np.dstack((ret, ret, ret))
+            if len(kwarg) != 3:
+                return None
+            # we neeed 3 args to match RGB and the sum of the should make 1
+            lst = list(kwards.values())
+            if not all(isinstance(x, float) for x in lst) or sum(lst) != 1:
+                return None
+            R = lst[0]
+            G = lst[1]
+            B = lst[2]
+        RGB = [R, G, B]
+        new = np.broadcast_to(array, array.shape) # on fait une copie
+        new = new[..., [0, 1, 2]] * RGB
+        tmp = np.sum(new, axis=2, keepdims=True) # gris est la somme de toutes les couleurs
+        new = np.broadcast_to(tmp, (array.shape[0], array.shape[1], 3)) # on re repartie cette somme sur tout le reste
+        return new
 
-        # .sum,.shape,.tile,.reshape,.dstack,.broadcast_to,.as_type + '*' + '/'
 from ImageProcessor import ImageProcessor
 
 if __name__ == "__main__":
@@ -72,14 +70,18 @@ if __name__ == "__main__":
     arr = imp.load("42AI.png")
 
     cf = ColorFilter()
-    #imp.display(arr)
-    #arr2 = cf.invert(arr)
-    print(arr)
     imp.display(arr)
-    #arr2 = cf.to_blue(arr)
-    #arr2 = cf.to_green(arr)
-    #arr2 = cf.to_red(arr)
-    #arr2 = cf.to_celluloid(arr)
+    arr2 = cf.invert(arr)
+    #print(arr)
+    imp.display(arr2)
+    arr2 = cf.to_blue(arr)
+    imp.display(arr2)
+    arr2 = cf.to_green(arr)
+    imp.display(arr2)
+    arr2 = cf.to_red(arr)
+    imp.display(arr2)
+    arr2 = cf.to_celluloid(arr)
+    imp.display(arr2)
     arr2 = cf.to_grayscale(arr, 'm')
     #print(arr2)
     imp.display(arr2)
